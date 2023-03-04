@@ -7,5 +7,7 @@ namespace ServidorMinecraft.API.Repositories
         Task<List<PetType>> GetAllAsync();
         Task<PetType> GetAsync(Guid id);
         Task<PetType> AddAsync(PetType petType);
+        Task<PetType> UpdateAsync(Guid id, PetType petType);
+        Task<PetType> DeleteAsync(Guid id);
     }
 }

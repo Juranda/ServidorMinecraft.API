@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ServidorMinecraft.API.Models;
 using ServidorMinecraft.API.Repositories;
 
 namespace ServidorMinecraft.API.Controllers
@@ -23,7 +22,9 @@ namespace ServidorMinecraft.API.Controllers
         {
             var petTypes = await petTypeRepository.GetAllAsync();
 
-            return Ok(petTypes);
+            var petTypeDTOs = mapper.Map<List<Models.DTO.PetType>>(petTypes);
+
+            return Ok(petTypeDTOs);
         }
 
         [HttpGet]
@@ -35,19 +36,52 @@ namespace ServidorMinecraft.API.Controllers
 
             if (petType is null) return NotFound();
 
-            return Ok(petType);
+            var petTypeDTO = mapper.Map<Models.DTO.PetType>(petType);
+
+            return Ok(petTypeDTO);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostPetTypeAsync(Models.DTO.AddPetTypeRequest addPetTypeRequest)
         {
-            var domainPetType = mapper.Map<Models.Domain.PetType>(addPetTypeRequest);
+            var petType = mapper.Map<Models.Domain.PetType>(addPetTypeRequest);
 
-            domainPetType = await petTypeRepository.AddAsync(domainPetType);
+            petType = await petTypeRepository.AddAsync(petType);
 
-            if (domainPetType is null) return NotFound();
+            if (petType is null) return NotFound();
 
-            return CreatedAtAction(nameof(GetPetTypeAsync), new { id = domainPetType.Id }, domainPetType);
+            var petTypeDTO = mapper.Map<Models.DTO.PetType>(petType);
+
+            return CreatedAtAction(nameof(GetPetTypeAsync), new { id = petTypeDTO.Id }, petTypeDTO);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> PutPetTypeAsync(
+            [FromRoute] Guid id, 
+            [FromBody] Models.DTO.PutPetTypeRequest putPetTypeRequest)
+        {
+            var petType = mapper.Map<Models.Domain.PetType>(putPetTypeRequest);
+
+            petType = await petTypeRepository.UpdateAsync(id, petType);
+
+            if (petType is null) return NotFound();
+
+            var petTypeDTO = mapper.Map<Models.DTO.PetType>(petType);
+
+            return Ok(petTypeDTO);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeletePetTypeAsync(Guid id)
+        {
+            var petDeleted = await petTypeRepository.DeleteAsync(id);
+            if (petDeleted is null) return NotFound();
+
+            var petTypeDTO = mapper.Map<Models.DTO.PetType>(petDeleted);
+
+            return Ok(petTypeDTO);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace ServidorMinecraft.API.Models.Profiles
             CreateMap<Domain.PetType, DTO.PetType>()
                 .ReverseMap();
 
-            CreateMap<Domain.PetType, DTO.AddPetTypeRequest>()
-                .ReverseMap();
+            CreateMap<DTO.AddPetTypeRequest, Domain.PetType>();
+            CreateMap<DTO.PutPetTypeRequest, Domain.PetType>();
         }
     }
 }
