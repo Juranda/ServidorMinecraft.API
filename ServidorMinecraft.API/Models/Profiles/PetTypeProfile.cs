@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServidorMinecraft.API.Models.DTO.PetTypeDTOs;
 
 namespace ServidorMinecraft.API.Models.Profiles
 {
@@ -6,11 +7,11 @@ namespace ServidorMinecraft.API.Models.Profiles
     {
         public PetTypeProfile()
         {
-            CreateMap<Domain.PetType, DTO.PetType>()
+            CreateMap<Domain.PetType, PetType>()
                 .ReverseMap();
 
-            CreateMap<DTO.AddPetTypeRequest, Domain.PetType>();
-            CreateMap<DTO.PutPetTypeRequest, Domain.PetType>();
+            CreateMap<AddPetTypeRequest, Domain.PetType>();
+            CreateMap<UpdatePetTypeRequest, Domain.PetType>();
         }
     }
 }

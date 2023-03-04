@@ -1,4 +1,4 @@
-﻿namespace ServidorMinecraft.API.Models.DTO
+﻿namespace ServidorMinecraft.API.Models.DTO.PetTypeDTOs
 {
     public class UpdatePetTypeRequest
     {
