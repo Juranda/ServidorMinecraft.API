@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ServidorMinecraft.API.Data;
 using ServidorMinecraft.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<MinecraftServerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerDb")));
+
 builder.Services.AddScoped<IPetTypeRepository, PetTypeRepository>();
 
 var app = builder.Build();

@@ -8,11 +8,10 @@
         public double Money { get; set; }
         public DateTime FirstLogginDate { get; set; }
 
-        public Guid PetId { get; set; }
         public Guid WorkId { get; set; }
 
         //Navigation props
-        public Pet Pet { get; set; }
         public Work Work { get; set; }
+        public IEnumerable<Pet> Pets { get; set; }
     }
 }

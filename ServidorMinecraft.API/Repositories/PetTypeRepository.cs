@@ -1,29 +1,20 @@
-﻿using ServidorMinecraft.API.Models.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using ServidorMinecraft.API.Data;
+using ServidorMinecraft.API.Models.Domain;
 
 namespace ServidorMinecraft.API.Repositories
 {
     public class PetTypeRepository : IPetTypeRepository
     {
+        private readonly MinecraftServerDbContext context;
+
+        public PetTypeRepository(MinecraftServerDbContext context)
+        {
+            this.context = context;
+        }
         public async Task<List<PetType>> GetAllAsync()
         {
-            return new List<PetType>
-            {
-                new PetType()
-                {
-                    Id = Guid.NewGuid(),
-                    Type = "Cat"
-                },
-                new PetType()
-                {
-                    Id = Guid.NewGuid(),
-                    Type = "Dog"
-                },
-                new PetType()
-                {
-                    Id = Guid.NewGuid(),
-                    Type = "Parrot"
-                }
-            };
+            return await context.PetTypes.ToListAsync();
         }
     }
 }
