@@ -1,0 +1,8 @@
+﻿namespace ServidorMinecraft.API.Models.Domain
+{
+    public class PetType
+    {
+        public Guid Id { get; set; }
+        public string Type { get; set; }
+    }
+}
