@@ -14,6 +14,8 @@ builder.Services.AddDbContext<MinecraftServerDbContext>(options => options.UseSq
 
 builder.Services.AddScoped<IPetTypeRepository, PetTypeRepository>();
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -16,5 +16,20 @@ namespace ServidorMinecraft.API.Repositories
         {
             return await context.PetTypes.ToListAsync();
         }
+
+        public async Task<PetType> GetAsync(Guid id)
+        {
+            return await context.PetTypes.FirstOrDefaultAsync(pt => pt.Id == id);
+        }
+
+        public async Task<PetType> AddAsync(PetType petType)
+        {
+            petType.Id = Guid.NewGuid();
+
+            await context.PetTypes.AddAsync(petType);
+            await context.SaveChangesAsync();
+
+            return petType;
+        }
     }
 }
