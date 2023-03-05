@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServidorMinecraft.API.Data;
 
@@ -11,9 +12,11 @@ using ServidorMinecraft.API.Data;
 namespace ServidorMinecraft.API.Migrations
 {
     [DbContext(typeof(MinecraftServerDbContext))]
-    partial class MinecraftServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230305153851_Users-and-Roles")]
+    partial class UsersandRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

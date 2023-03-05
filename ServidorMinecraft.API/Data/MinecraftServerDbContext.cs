@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServidorMinecraft.API.Models.Domain;
+using ServidorMinecraft.API.Models.Domain.Authentication;
 
 namespace ServidorMinecraft.API.Data
 {
@@ -11,14 +12,24 @@ namespace ServidorMinecraft.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Work_Address>()
-                .HasOne(ur => ur.Work)
+                .HasOne(wa => wa.Work)
                 .WithMany(w => w.WorkAddresses)
-                .HasForeignKey(ur => ur.WorkId);
+                .HasForeignKey(wa => wa.WorkId);
 
             modelBuilder.Entity<Work_Address>()
-                .HasOne(ur => ur.Address)
+                .HasOne(wa => wa.Address)
                 .WithMany(a => a.WorkAddresses)
-                .HasForeignKey(ur => ur.AddressId);
+                .HasForeignKey(wa => wa.AddressId);
+
+            modelBuilder.Entity<Users_Roles>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.Users_Roles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<Users_Roles>()
+                .HasOne(ur => ur.Role)
+                .WithMany(u => u.Users_Roles)
+                .HasForeignKey(ur => ur.RoleId);
         }
 
         public DbSet<Player> Players { get; set; }
@@ -29,5 +40,12 @@ namespace ServidorMinecraft.API.Data
         public DbSet<PetType> PetTypes { get; set; }
 
         public DbSet<Work_Address> Works_Addresses { get; set; }
+
+        //Authentication
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Users_Roles> Users_Roles { get; set; }
     }
 }

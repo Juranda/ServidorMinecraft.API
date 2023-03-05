@@ -42,8 +42,9 @@ builder.Services.AddFluentValidation(oprtions => oprtions.RegisterValidatorsFrom
 builder.Services.AddDbContext<MinecraftServerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerDb")));
 
 builder.Services.AddScoped<IPetTypeRepository, PetTypeRepository>();
-builder.Services.AddSingleton<IUserRepository, StaticUserRepository>();
-builder.Services.AddSingleton<ITokenHandler, ServidorMinecraft.API.Repositories.TokenHandler>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITokenHandler, ServidorMinecraft.API.Repositories.TokenHandler>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
