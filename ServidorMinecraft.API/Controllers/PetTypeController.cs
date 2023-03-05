@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServidorMinecraft.API.Models.DTO.PetTypeDTOs;
 using ServidorMinecraft.API.Repositories;
@@ -19,7 +20,8 @@ namespace ServidorMinecraft.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPetTypesAsync()
+        [Authorize(Roles = "read")]
+        public async Task<IActionResult> GetAllPetTypesAsync()
         {
             var petTypes = await petTypeRepository.GetAllAsync();
 
@@ -29,7 +31,8 @@ namespace ServidorMinecraft.API.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
+        [Authorize(Roles = "read")]
         [ActionName(nameof(GetPetTypeAsync))]
         public async Task<IActionResult> GetPetTypeAsync([FromRoute] Guid id)
         {
@@ -43,6 +46,7 @@ namespace ServidorMinecraft.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "create")]
         public async Task<IActionResult> PostPetTypeAsync(AddPetTypeRequest addPetTypeRequest)
         {
             var petType = mapper.Map<Models.Domain.PetType>(addPetTypeRequest);
@@ -57,7 +61,8 @@ namespace ServidorMinecraft.API.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:guid}")]
+        [Authorize(Roles = "update")]
         public async Task<IActionResult> PutPetTypeAsync(
             [FromRoute] Guid id, 
             [FromBody] UpdatePetTypeRequest putPetTypeRequest)
@@ -74,7 +79,8 @@ namespace ServidorMinecraft.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:guid}")]
+        [Authorize(Roles = "delete")]
         public async Task<IActionResult> DeletePetTypeAsync(Guid id)
         {
             var petDeleted = await petTypeRepository.DeleteAsync(id);
